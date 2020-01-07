@@ -21,12 +21,17 @@ controller.getUser = (req, res, next) => {
             return next(err);
         })
 }
+
+// Cloudinary configuration
 cloudinary.config({ 
     cloud_name: 'travelappcloud', 
     api_key: "636342232981834", 
     api_secret: "fR0HuLM1BXdVwwwcIOsNmCzQbPs"
   }) 
+
+
 controller.addImage = (req, res, next) => {
+    console.log(cloudinary);
     console.log('in add image YO')
     const values = Object.values(req.files)
     console.log(values)

@@ -13,6 +13,7 @@ import {Animated} from 'react-animated-css';
 
 //this one renders ya know the app.
 export default class App extends Component {
+// CONSTRUCTOR====================================================
     constructor(props) {
         super(props);
         this.state = {
@@ -31,6 +32,8 @@ export default class App extends Component {
             clickedMarker: '',
             images: [],
     }
+
+    // FUNCTION BINDS
     this.onChange = this.onChange.bind(this);
     this.onPicChange = this.onPicChange.bind(this);
     this.clickMap = this.clickMap.bind(this);
@@ -38,6 +41,7 @@ export default class App extends Component {
     this.onSubmit= this.onSubmit.bind(this);
     this.buttonSubmit=this.buttonSubmit.bind(this);
     }
+    //==================================================================
     
     onPicChange(e) {
     const files = Array.from(e.target.files)
