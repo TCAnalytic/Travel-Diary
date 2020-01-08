@@ -9,18 +9,47 @@ const controller = {};
 
 //controller.getUser submits a query to the database to get all the users. this is mostly for a test and a general template of how to make queries in the future
 controller.getUser = (req, res, next) => {
+    const { username, password } = req.body;
+    console.log('This is the req body, for getUser', req.body);
     const userQuery =
-        `SELECT * FROM users;`;
+        `SELECT username FROM users WHERE username = '${username}' AND password = '${password}'`;
     db.query(userQuery)
         .then(data => {
-            res.locals.users = data.rows;
-            //console.log(res.locals.users);
-            return next();
+            console.log(data)
+            if (data.rows[0]) {
+                console.log("user has been verified")
+                return next();
+            } else {
+                console.log('username/password are invalid');
+                res.send("Invalid username or password, please sign up or try again");
+            }
         })
         .catch(err => {
             return next(err);
         })
 }
+
+controller.createUser = (req, res, next) => {
+    const { username, password } = req.body;
+    const newQuery =
+        `INSERT INTO users (username, password) values ($1, $2)`
+
+    const values = [username, password]
+    db.query(newQuery, values)
+        .then(data => console.log('sucessfully created user', data))
+        .catch(err => console.log('there was an error creating new user'))
+
+    return next();
+};
+
+
+controller.login = (req, res, next) => {
+    res.sendStatus(200)
+}
+controller.signup = (req, res, next) => {
+    res.sendStatus(200)
+}
+
 cloudinary.config({
     // evan is making us change this
     cloud_name: 'travelappcloud',
