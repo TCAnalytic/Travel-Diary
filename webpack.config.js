@@ -1,6 +1,5 @@
 const path = require('path');
 const webpack = require('webpack');
-
 module.exports = {
   entry: './client/index.js',
   devServer: {
@@ -8,14 +7,13 @@ module.exports = {
     publicPath: '/build',
     proxy: {
       '/': 'http://localhost:3000',
-    }
+    },
   },
   output: {
     path: path.resolve(__dirname, 'build'),
     filename: 'bundle.js',
   },
   mode: "development",
-
   module: {
     rules: [
       {
@@ -30,10 +28,10 @@ module.exports = {
           options: {
             presets: [`@babel/preset-env`, `@babel/preset-react`]
           }
-<<<<<<< HEAD
         }
       },
       {
+        // Image uploader
         test: /\.(png|jpe?g|gif)$/i,
         use: [
           {
@@ -42,19 +40,5 @@ module.exports = {
         ],
       },
     ]
-=======
-        },
-        {
-          // Image uploader
-          test: /\.(png|jpe?g|gif)$/i,
-          use: [
-            {
-              loader: 'file-loader',
-            },
-          ],
-        },
-      ]
-    }
->>>>>>> 44002b77cf28328cce21dd4230e5a6c53561df20
   }
 }

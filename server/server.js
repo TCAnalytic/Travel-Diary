@@ -19,13 +19,8 @@ app.use(formData.parse())
 app.use(bodyParser.json());
 
 // route to get all markers and main page
-<<<<<<< HEAD
 app.get('/', (req, res) => {
-  res.status(200).sendFile(path.join(__dirname, '../client/login.html'));
-=======
-app.get('/',  (req, res) => {
-  res.status(200).sendFile(path.join(__dirname , '../client/index.html'));
->>>>>>> 44002b77cf28328cce21dd4230e5a6c53561df20
+  res.status(200).sendFile(path.resolve(__dirname, '../client/login.html'));
 })
 
 app.get('/signup', (req, res) => {

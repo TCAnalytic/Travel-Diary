@@ -21,24 +21,12 @@ controller.getUser = (req, res, next) => {
             return next(err);
         })
 }
-<<<<<<< HEAD
 cloudinary.config({
     // evan is making us change this
     cloud_name: 'travelappcloud',
     api_key: "636342232981834",
     api_secret: "fR0HuLM1BXdVwwwcIOsNmCzQbPs"
 })
-=======
-
-// Cloudinary configuration
-cloudinary.config({ 
-    cloud_name: 'travelappcloud', 
-    api_key: "636342232981834", 
-    api_secret: "fR0HuLM1BXdVwwwcIOsNmCzQbPs"
-  }) 
-
-
->>>>>>> 44002b77cf28328cce21dd4230e5a6c53561df20
 controller.addImage = (req, res, next) => {
     console.log(cloudinary);
     console.log('in add image YO')
