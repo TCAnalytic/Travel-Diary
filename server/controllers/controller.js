@@ -16,10 +16,10 @@ controller.getUser = (req, res, next) => {
     db.query(userQuery)
         .then(data => {
             console.log(data)
-            if(data.rows[0]){
+            if (data.rows[0]) {
                 console.log("user has been verified")
                 return next();
-            }else {
+            } else {
                 console.log('username/password are invalid');
                 res.send("Invalid username or password, please sign up or try again");
             }
@@ -28,6 +28,20 @@ controller.getUser = (req, res, next) => {
             return next(err);
         })
 }
+
+controller.createUser = (req, res, next) => {
+    const { username, password } = req.body;
+    const newQuery =
+        `INSERT INTO users (username, password) values ($1, $2)`
+
+    const values = [username, password]
+    db.query(newQuery, values)
+        .then(data => console.log('sucessfully created user', data))
+        .catch(err => console.log('there was an error creating new user'))
+
+    return next();
+};
+
 
 controller.login = (req, res, next) => {
     res.sendStatus(200)
