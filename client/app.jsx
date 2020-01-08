@@ -13,6 +13,7 @@ import { Animated } from 'react-animated-css';
 
 //this one renders ya know the app.
 export default class App extends Component {
+<<<<<<< HEAD
   constructor(props) {
     super(props);
     this.state = {
@@ -20,6 +21,15 @@ export default class App extends Component {
       userWhiteList: [],
       markerList: [{
         tag: 'food', location: { lat: 45, lng: 45 }, description: 'this tag is a test of tags', imgURL: ['https://res.cloudinary.com/travelappcloud/image/upload/v1578338991/g7e9d1it4zaxsr4ahatz.png']
+=======
+// CONSTRUCTOR====================================================
+    constructor(props) {
+        super(props);
+        this.state = {
+            imgList: [],
+            userWhiteList: [],
+            markerList: [{tag: 'food', location: {lat: 45, lng: 45}, description: 'this tag is a test of tags', imgURL: ['https://res.cloudinary.com/travelappcloud/image/upload/v1578338991/g7e9d1it4zaxsr4ahatz.png']
+>>>>>>> 44002b77cf28328cce21dd4230e5a6c53561df20
 
       }],
       locationInfo: '',
@@ -32,15 +42,26 @@ export default class App extends Component {
       clickedMarker: '',
       images: [],
     }
+
+    // FUNCTION BINDS
     this.onChange = this.onChange.bind(this);
     this.onPicChange = this.onPicChange.bind(this);
     this.clickMap = this.clickMap.bind(this);
     this.clickMarker = this.clickMarker.bind(this);
+<<<<<<< HEAD
     this.onSubmit = this.onSubmit.bind(this);
     this.buttonSubmit = this.buttonSubmit.bind(this);
   }
 
   onPicChange(e) {
+=======
+    this.onSubmit= this.onSubmit.bind(this);
+    this.buttonSubmit=this.buttonSubmit.bind(this);
+    }
+    //==================================================================
+    
+    onPicChange(e) {
+>>>>>>> 44002b77cf28328cce21dd4230e5a6c53561df20
     const files = Array.from(e.target.files)
     // this.setState({ uploading: true })
 

@@ -19,8 +19,13 @@ app.use(formData.parse())
 app.use(bodyParser.json());
 
 // route to get all markers and main page
+<<<<<<< HEAD
 app.get('/', (req, res) => {
   res.status(200).sendFile(path.join(__dirname, '../client/login.html'));
+=======
+app.get('/',  (req, res) => {
+  res.status(200).sendFile(path.join(__dirname , '../client/index.html'));
+>>>>>>> 44002b77cf28328cce21dd4230e5a6c53561df20
 })
 
 app.get('/signup', (req, res) => {
@@ -39,6 +44,7 @@ app.get('/build/bundle.js', (req, res) => {
   console.log('inside / build-get')
   res.sendFile(path.resolve(__dirname, '../build/bundle.js'));
 });
+//====================================================
 
 // route to create a marker on first click
 app.post('/addMarker', userController.addMarker, (req, res) => {

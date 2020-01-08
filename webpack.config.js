@@ -30,6 +30,7 @@ module.exports = {
           options: {
             presets: [`@babel/preset-env`, `@babel/preset-react`]
           }
+<<<<<<< HEAD
         }
       },
       {
@@ -41,5 +42,19 @@ module.exports = {
         ],
       },
     ]
+=======
+        },
+        {
+          // Image uploader
+          test: /\.(png|jpe?g|gif)$/i,
+          use: [
+            {
+              loader: 'file-loader',
+            },
+          ],
+        },
+      ]
+    }
+>>>>>>> 44002b77cf28328cce21dd4230e5a6c53561df20
   }
 }
