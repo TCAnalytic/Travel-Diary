@@ -9,27 +9,39 @@ const controller = {};
 
 //controller.getUser submits a query to the database to get all the users. this is mostly for a test and a general template of how to make queries in the future
 controller.getUser = (req, res, next) => {
-    const userQuery = 
-    `SELECT * FROM users;`;
+    const { username, password } = req.body;
+    console.log('This is the req body, for getUser', req.body);
+    const userQuery =
+        `SELECT username FROM users WHERE username = '${username}' AND password = '${password}'`;
     db.query(userQuery)
         .then(data => {
-            res.locals.users = data.rows;
-            //console.log(res.locals.users);
-            return next();
+            console.log(data)
+            if(data.rows[0]){
+                console.log("user has been verified")
+                return next();
+            }else {
+                console.log('username/password are invalid');
+                res.send("Invalid username or password, please sign up or try again");
+            }
         })
         .catch(err => {
             return next(err);
         })
 }
 
-// Cloudinary configuration
-cloudinary.config({ 
-    cloud_name: 'travelappcloud', 
-    api_key: "636342232981834", 
+controller.login = (req, res, next) => {
+    res.sendStatus(200)
+}
+controller.signup = (req, res, next) => {
+    res.sendStatus(200)
+}
+
+cloudinary.config({
+    // evan is making us change this
+    cloud_name: 'travelappcloud',
+    api_key: "636342232981834",
     api_secret: "fR0HuLM1BXdVwwwcIOsNmCzQbPs"
-  }) 
-
-
+})
 controller.addImage = (req, res, next) => {
     console.log(cloudinary);
     console.log('in add image YO')
@@ -38,20 +50,20 @@ controller.addImage = (req, res, next) => {
     const promises = values.map(image => cloudinary.uploader.upload(image.path))
     console.log('did promises', promises)
     Promise
-      .all(promises)
-      .then(results => {
-          
-          console.log('results url' , results[0].url)
-          res.locals.newImgURL = results[0].url 
-          return next();
-      })
-      
-      .catch(err => {
-        console.log(err);
+        .all(promises)
+        .then(results => {
+
+            console.log('results url', results[0].url)
+            res.locals.newImgURL = results[0].url
+            return next();
         })
-      
-      
-  
+
+        .catch(err => {
+            console.log(err);
+        })
+
+
+
 }
 controller.getImage = (req, res, next) => {
     // https://res.cloudinary.com/travelappcloud/image/fetch/
@@ -79,8 +91,8 @@ controller.getImage = (req, res, next) => {
 // }
 controller.getMarkers = (req, res, next) => {
     const markersQuery =
-    // `SELECT users.id, users.username, location.longitude, location.latitude, location.description, location.tag, location.imgURLS
-    `SELECT users.id, users.username, location.longitude, location.latitude, location.description, location.tag, location.urls
+        // `SELECT users.id, users.username, location.longitude, location.latitude, location.description, location.tag, location.imgURLS
+        `SELECT users.id, users.username, location.longitude, location.latitude, location.description, location.tag, location.urls
     FROM users
     JOIN location ON location.users_id = users.id;`;
     db.query(markersQuery)
@@ -99,8 +111,8 @@ controller.getMarkers = (req, res, next) => {
 controller.addMarker = (req, res, next) => {
     //console.log('addmarker req.body:', req.body)
     const { longitude, latitude } = req.body;
-    const addMarkerQuery = 
-    `INSERT INTO location (longitude, latitude, users_id)
+    const addMarkerQuery =
+        `INSERT INTO location (longitude, latitude, users_id)
     VALUES ('${parseInt(longitude)}', '${parseInt(latitude)}', 1);`
     db.query(addMarkerQuery)
         .then(newMarker => {
@@ -117,15 +129,15 @@ controller.getOneMarker = (req, res, next) => {
     // ---------- need to test req.body from front end post request to ensure keys are consistent ------
     const { longitude, latitude } = req.body;
 
-    const getOneMarkerQuery = 
-    `SELECT * FROM location
+    const getOneMarkerQuery =
+        `SELECT * FROM location
     JOIN images 
     ON location.location_id = images.location_id
     WHERE location.longitude = '${longitude}' AND location.latitude = '${latitude}';`;
-    db.query(getOneMarkerQuery) 
+    db.query(getOneMarkerQuery)
         .then(oneMarker => {
             res.locals.oneMarker = oneMarker.rows;
-           // console.log(res.locals.oneMarker);
+            // console.log(res.locals.oneMarker);
             return next();
         })
         .catch(err => {
@@ -139,7 +151,7 @@ controller.updateMarker = (req, res, next) => {
     const { latitude, longitude, description, tag, location, imgURL } = req.body;
     console.log(latitude, longitude, description, tag, location, imgURL)
     const updateMarkerQuery =
-    `BEGIN TRANSACTION;
+        `BEGIN TRANSACTION;
     UPDATE location
     SET description = '${description}', tag = '${tag}', location = '${location}', urls='${imgURL}'
     WHERE latitude = '${parseInt(latitude)}' AND longitude = '${parseInt(longitude)}';

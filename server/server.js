@@ -17,6 +17,7 @@ const userController = require('./controllers/controller');
 
 app.use(formData.parse())
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}))
 
 // route to get all markers and main page
 app.get('/',  (req, res) => {
@@ -31,12 +32,16 @@ app.get('/profile',  (req, res) => {
   res.status(200).sendFile(path.join(__dirname , '../client/index.html'));
 })
 
+app.post('/profile', userController.getUser, (req, res) => {
+  res.status(200).sendFile(path.resolve(__dirname, '../client/index.html'))
+})
+
 app.get('/api', userController.getMarkers, (req, res) => {
-  res.status(200).json({markersList: res.locals.markersList})
+  res.status(200).json({ markersList: res.locals.markersList })
 })
 
 app.get('/build/bundle.js', (req, res) => {
-  console.log('inside / build-get') 
+  console.log('inside / build-get')
   res.sendFile(path.resolve(__dirname, '../build/bundle.js'));
 });
 //====================================================
@@ -52,7 +57,7 @@ app.post('/addImage', userController.addImage, (req, res) => {
 
 // route to update marker when you submit form
 app.patch('/updateMarker', userController.updateMarker, userController.getOneMarker, (req, res) => {
-  res.status(200).json({ updatedMarker: res.locals.oneMarker});
+  res.status(200).json({ updatedMarker: res.locals.oneMarker });
 })
 
 //this is a test to see if the query to the DB works - had to use another route because of the original '/' get request that serves the index.html
@@ -61,17 +66,17 @@ app.get('/getusers', userController.getUser, (req, res) => {
 })
 
 
-app.use('*', (req,res) => {
-    res.status(404).send('Not Found');
-  });
+app.use('*', (req, res) => {
+  res.status(404).send('Not Found');
+});
 
 
 
 
 app.use((err, req, res, next) => {
-    console.log(err);
-    res.status(500).send('Internal Server Error');
-  });
+  console.log(err);
+  res.status(500).send('Internal Server Error');
+});
 
 
-app.listen(PORT, ()=>{ console.log(`Listening on port ${PORT}...`); });
+app.listen(PORT, () => { console.log(`Listening on port ${PORT}...`); });
