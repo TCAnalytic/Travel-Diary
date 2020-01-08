@@ -1,5 +1,5 @@
-import React, {Component} from "react";
-import MapDisplay from './components/mapDisplay.jsx';
+import React, { Component } from "react";
+import MapContainer from './components/mapDisplay.jsx';
 
 class App extends Component {
     constructor(props) {
@@ -24,16 +24,16 @@ class App extends Component {
     }
     render() {
 
-        return(
+        return (
             // TITLE
             <div>
-            <h1 className="title">Dear Travel Diary...</h1>
+                <h1 className="title">Dear Travel Diary...</h1>
 
-            {/*THIS IS MAP DISPLAY */}
-            <MapDisplay />
-            
+                {/*THIS IS MAP DISPLAY */}
+                <MapContainer />
+
             </div>
-            
+
         )
     }
 }

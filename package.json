@@ -21,6 +21,7 @@
   "homepage": "https://github.com/egrobar/mainProject#readme",
   "dependencies": {
     "@babel/core": "^7.7.7",
+    "@babel/plugin-proposal-class-properties": "^7.7.4",
     "@babel/preset-env": "^7.7.7",
     "@types/googlemaps": "^3.39.0",
     "@types/markerclustererplus": "^2.1.33",
@@ -33,6 +34,7 @@
     "css-loader": "^3.4.1",
     "express": "^4.17.1",
     "express-form-data": "^2.0.10",
+    "google-maps-react": "^2.0.2",
     "mongoose": "^5.8.4",
     "pg": "^7.17.0",
     "react": "^16.12.0",
