@@ -30,6 +30,7 @@ module.exports = {
           }
         },
         {
+          // Image uploader
           test: /\.(png|jpe?g|gif)$/i,
           use: [
             {
