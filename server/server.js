@@ -8,7 +8,7 @@ const bodyParser = require('body-parser');
 const cloudinary = require('cloudinary')
 const formData = require('express-form-data')
 
-const PORT = 8080;
+const PORT = 3000;
 
 const app = express();
 
@@ -20,6 +20,14 @@ app.use(bodyParser.json());
 
 // route to get all markers and main page
 app.get('/',  (req, res) => {
+  res.status(200).sendFile(path.join(__dirname , '../client/login.html'));
+})
+
+app.get('/signup',  (req, res) => {
+  res.status(200).sendFile(path.join(__dirname , '../client/signup.html'));
+})
+
+app.get('/profile',  (req, res) => {
   res.status(200).sendFile(path.join(__dirname , '../client/index.html'));
 })
 
