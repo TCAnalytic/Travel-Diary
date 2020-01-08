@@ -17,19 +17,24 @@ const userController = require('./controllers/controller');
 
 app.use(formData.parse())
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}))
 
 // route to get all markers and main page
-app.get('/', (req, res) => {
-  res.status(200).sendFile(path.resolve(__dirname, '../client/login.html'));
+app.get('/',  (req, res) => {
+  res.status(200).sendFile(path.join(__dirname , '../client/login.html'));
 })
 
-app.get('/signup', (req, res) => {
-  res.status(200).sendFile(path.join(__dirname, '../client/signup.html'))
+app.get('/signup',  (req, res) => {
+  res.status(200).sendFile(path.join(__dirname , '../client/signup.html'));
 })
 
-app.get('/profile', (req, res) => {
-  res.status(200).sendFile(path.join(__dirname, '../client/index.html'))
-});
+app.get('/profile',  (req, res) => {
+  res.status(200).sendFile(path.join(__dirname , '../client/index.html'));
+})
+
+app.post('/profile', userController.getUser, (req, res) => {
+  res.status(200).sendFile(path.resolve(__dirname, '../client/index.html'))
+})
 
 app.get('/api', userController.getMarkers, (req, res) => {
   res.status(200).json({ markersList: res.locals.markersList })
