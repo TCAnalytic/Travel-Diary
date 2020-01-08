@@ -7,32 +7,39 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const cloudinary = require('cloudinary')
 const formData = require('express-form-data')
+const cookieParser = require('cookie-parser')
 
 const PORT = 3000;
 
 const app = express();
 
 const userController = require('./controllers/controller');
+const cookieControllers = require('./controllers/cookieController')
 
 
 app.use(formData.parse())
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}))
+app.use(bodyParser.urlencoded({ extended: true }))
+app.use(cookieParser());
 
 // route to get all markers and main page
-app.get('/',  (req, res) => {
-  res.status(200).sendFile(path.join(__dirname , '../client/login.html'));
+app.get('/', (req, res) => {
+  res.status(200).sendFile(path.join(__dirname, '../client/login.html'));
 })
 
-app.get('/signup',  (req, res) => {
-  res.status(200).sendFile(path.join(__dirname , '../client/signup.html'));
+app.post('/signup', userController.createUser, (req, res) => {
+  res.status(200).sendFile(path.resolve(__dirname, '../client/login.html'))
 })
 
-app.get('/profile',  (req, res) => {
-  res.status(200).sendFile(path.join(__dirname , '../client/index.html'));
+app.get('/signup', (req, res) => {
+  res.status(200).sendFile(path.join(__dirname, '../client/signup.html'));
 })
 
-app.post('/profile', userController.getUser, (req, res) => {
+app.get('/profile', auth, (req, res) => {
+  res.status(200).sendFile(path.join(__dirname, '../client/index.html'));
+})
+
+app.post('/profile', userController.getUser, cookieControllers.setCookie, (req, res) => {
   res.status(200).sendFile(path.resolve(__dirname, '../client/index.html'))
 })
 
@@ -64,6 +71,11 @@ app.patch('/updateMarker', userController.updateMarker, userController.getOneMar
 app.get('/getusers', userController.getUser, (req, res) => {
   res.status(200).send('this works man!');
 })
+
+function auth(req, res, next) {
+  if (req.cookies.username) next();
+  else res.redirect('/')
+}
 
 
 app.use('*', (req, res) => {
