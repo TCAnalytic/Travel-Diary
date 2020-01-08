@@ -36,10 +36,12 @@ controller.createUser = (req, res, next) => {
 
     const values = [username, password]
     db.query(newQuery, values)
-        .then(data => console.log('sucessfully created user', data))
-        .catch(err => console.log('there was an error creating new user'))
-
-    return next();
+        .then(data => {
+            return next()
+        })
+        .catch(err => {
+            res.status(404).send(Buffer.from('<h1>Username already exist please try again <h1> <br> <form class="sign-up-form" action="/signup" method="GET"> <input id="sign-up-btn" type="submit" value="Signup">'))
+        })
 };
 
 
