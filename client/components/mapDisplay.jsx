@@ -37,11 +37,6 @@ class MapDisplay extends Component {
                 onClick={clickMarker}
                 key={i}
                 position={{ lat: marker.location.lat, lng: marker.location.lng}}
-              //   icon = {{
-              //     // url: '/icon3.png', 
-              //     scaledSize:new window.google.maps.Size(30,30)
-              //   }
-              // }
               />
             ))
               }
@@ -57,10 +52,10 @@ class MapDisplay extends Component {
   const MapWrapped = withScriptjs(withGoogleMap(Map));
       return (
         <div>
-          <div>
+          {/* <div>
             <input id ="searchTag" type = "text" name = "searchTag" placeholder="Filter marker by tag" onChange = {this.props.onChange} value={this.props.searchTag}/>
             <button onClick = {this.props.buttonSubmit}>submit</button>
-          </div>
+          </div> */}
           <div style={{ width: '70vw' , height: '70vh'}}>
               <MapWrapped 
               googleMapURL={'https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=AIzaSyANq9H8F3LekACFLwylqb9dGv-Bgj2-kww'}

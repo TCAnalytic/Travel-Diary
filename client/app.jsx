@@ -115,8 +115,6 @@ export default class App extends Component {
     // console.log('current saved marker' , this.state.clickedMarker)
   }
   clickMap(e) {
-    
-    // console.log( "Latitude: "+e.latLng.lat()+" "+", longitude: "+e.latLng.lng())
     let newMarker = { username: this.state.username, tag: '', location: { lat: e.latLng.lat(), lng: e.latLng.lng() }, description: '' }
     let newMarkerList = [...this.state.markerList]
     newMarkerList.push(newMarker);
@@ -125,17 +123,10 @@ export default class App extends Component {
     fetch('/addMarker', {
       
       method: 'POST', // *GET, POST, PUT, DELETE, etc.
-      body: JSON.stringify({ ...newMarker, username: newMarker.username, longitude: newMarker.location.lng, latitude: newMarker.location.lat, savedTag: '' }), // body data type must match "Content-Type" header
-      //mode: 'cors', // no-cors, *cors, same-origins
-      //cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-      //credentials: 'same-origin', // include, *same-origin, omit
+      body: JSON.stringify({ ...newMarker, username: newMarker.username, longitude: newMarker.location.lng, latitude: newMarker.location.lat, savedTag: '' }), // 
       headers: {
         'Content-Type': 'application/json'
-        // 'Content-Type': 'application/x-www-form-urlencoded',
       },
-      //redirect: 'follow', // manual, *follow, error q q
-      //referrerPolicy: 'no-referrer', // no-referrer, *client
-
     })
       .then((res) => {
         console.log('inside post then', res)
@@ -144,12 +135,9 @@ export default class App extends Component {
     ///works but in reality we should be doing fetch/post here instead of changing state
 
   }
-  onChange(e) {
-    //takes typed information and sets relevant state
-    // console.log(e.target.value);
-    this.setState({ [e.target.name]: e.target.value }, () => {
 
-      // console.log('after setState onChange', this.state.markerList);
+  onChange(e) {
+    this.setState({ [e.target.name]: e.target.value }, () => {
     })
   }
   buttonSubmit() {
@@ -260,16 +248,36 @@ export default class App extends Component {
               </h1>
         </Animated>
         <div className="centerArea">
-          <div className="mapDisplay">
-            <MapDisplay savedLocation="" clickedMarker={this.state.clickedMarker} clickMarker={this.clickMarker} clickMap={this.clickMap} markerList={this.state.markerList} onChange={this.onChange} searchTag={this.state.searchTag} buttonSubmit={this.buttonSubmit} savedTag={this.state.savedTag} />
-          </div>
-          <div className="infoBox">
 
+        
+          <div>           {/* TAG SEARCH BAR */}
+            <input id ="searchTag" type = "text" name = "searchTag" placeholder="Filter marker by tag" onChange={this.state.onChange} value=''/>
+            <button onClick = {this.state.buttonSubmit}>submit</button>
+          </div>
+
+
+          <div className="mapDisplay">
+            <MapDisplay 
+            savedLocation="" 
+            clickedMarker={this.state.clickedMarker} 
+            clickMarker={this.clickMarker} 
+            clickMap={this.clickMap} 
+            markerList={this.state.markerList} 
+            onChange={this.onChange} 
+            searchTag={this.state.searchTag} 
+            buttonSubmit={this.buttonSubmit} 
+            savedTag={this.state.savedTag} 
+            />
+          </div>
+
+
+          <div className="infoBox">
             <Animated animationIn="bounceInRight" animationOut="fadeOut" isVisible={true}>
               {markerInfoBox}
             </Animated>
             {imageDisplay}
           </div>
+   
         </div>
         {markerForm}
       </div>
