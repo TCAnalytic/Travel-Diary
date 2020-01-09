@@ -1,50 +1,76 @@
-import { Map, GoogleApiWrapper, Marker } from 'google-maps-react';
+//this is a react component wow
+
 import React, { Component } from 'react';
+import {
+    withGoogleMap,
+    withScriptjs,
+    GoogleMap,
+    Marker,
+    InfoWindow
+  } from "react-google-maps";
 
-
-const mapStyles = {
-    width: '100%',
-    height: '50%',
-};
-
-export class MapContainer extends Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            stores: [{ lat: 47.49855629475769, lng: -122.14184416996333 },
-            { latitude: 47.359423, longitude: -122.021071 },
-            { latitude: 47.2052192687988, longitude: -121.988426208496 },
-            { latitude: 47.6307081, longitude: -122.1434325 },
-            { latitude: 47.3084488, longitude: -122.2140121 },
-            { latitude: 47.5524695, longitude: -122.0425407 }]
-        }
+import mapStyle from '../mapStyle';
+// const AnyReactComponent = ({ text }) => <div>{text}</div>;
+class MapDisplay extends Component {
+  constructor(props) {
+      super(props);
+  }
+  render() {
+    let currentMarkerList = this.props.markerList;
+    let clickMap = this.props.clickMap;
+    let clickMarker = this.props.clickMarker;
+    if(this.props.savedTag){
+      currentMarkerList = currentMarkerList.filter((marker)=>{
+        return marker.tag === this.props.savedTag;
+      })
     }
-
-    displayMarkers = () => {
-        return this.state.stores.map((store, index) => {
-            return <Marker key={index} id={index} position={{
-                lat: store.latitude,
-                lng: store.longitude
-            }}
-                onClick={() => console.log("You clicked me!")} />
-        })
-    }
-
-    render() {
-        return (
-            <Map
-                google={this.props.google}
-                zoom={8}
-                style={mapStyles}
-                initialCenter={{ lat: 47.444, lng: -122.176 }}
-            >
-                {this.displayMarkers()}
-            </Map>
-        );
-    }
+    function Map() {
+      return (
+          <GoogleMap
+          onClick={clickMap}
+          defaultZoom={4}
+          defaultCenter={{lat: 39.82, lng: -98.57}}
+          defaultOptions ={{styles: mapStyle}}
+          >
+            {currentMarkerList.map((marker, i) => (
+              <Marker 
+                onClick={clickMarker}
+                key={i}
+                position={{ lat: marker.location.lat, lng: marker.location.lng}}
+              //   icon = {{
+              //     // url: '/icon3.png', 
+              //     scaledSize:new window.google.maps.Size(30,30)
+              //   }
+              // }
+              />
+            ))
+              }
+          
+  
+  
+          </GoogleMap>
+          
+  
+      )
+  }
+  
+  const MapWrapped = withScriptjs(withGoogleMap(Map));
+      return (
+        <div>
+          <div>
+            <input id ="searchTag" type = "text" name = "searchTag" placeholder="Filter marker by tag" onChange = {this.props.onChange} value={this.props.searchTag}/>
+            <button onClick = {this.props.buttonSubmit}>submit</button>
+          </div>
+          <div style={{ width: '70vw' , height: '70vh'}}>
+              <MapWrapped 
+              googleMapURL={'https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=AIzaSyANq9H8F3LekACFLwylqb9dGv-Bgj2-kww'}
+              loadingElement={<div style={{height: '100%'}} /> }
+              containerElement={<div style={{height: '100%'}} /> }
+              mapElement={<div style={{height: '100%'}} /> }
+              />
+          </div>
+        </div>   
+      )
+  }
 }
-
-export default GoogleApiWrapper({
-    apiKey: 'AIzaSyANq9H8F3LekACFLwylqb9dGv-Bgj2-kww'
-})(MapContainer);
+export default MapDisplay;
