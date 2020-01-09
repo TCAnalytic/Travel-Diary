@@ -27,12 +27,20 @@ app.get('/', (req, res) => {
   res.status(200).sendFile(path.join(__dirname, '../client/login.html'));
 })
 
+app.get('/login.css', (req, res) => {
+  res.status(200).sendFile(path.resolve(__dirname, '../client/login.css'))
+})
+
 app.post('/signup', userController.createUser, (req, res) => {
   res.status(200).sendFile(path.resolve(__dirname, '../client/login.html'))
 })
 
 app.get('/signup', (req, res) => {
   res.status(200).sendFile(path.join(__dirname, '../client/signup.html'));
+})
+
+app.get('/signup/signup.css', (req, res) => {
+  res.status(200).sendFile(path.resolve(__dirname, '../client/signup.css'));
 })
 
 app.get('/profile', auth, (req, res) => {
