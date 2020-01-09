@@ -104,11 +104,13 @@ controller.getImage = (req, res, next) => {
 //         })
 // }
 controller.getMarkers = (req, res, next) => {
+    // console.log('this is get markers req =>', req.body)
+    const user = req.headers.cookie.slice(9)
     const markersQuery =
         // `SELECT users.id, users.username, location.longitude, location.latitude, location.description, location.tag, location.imgURLS
         `SELECT users.id, users.username, location.longitude, location.latitude, location.description, location.tag, location.urls
     FROM users
-    JOIN location ON location.users_id = users.id;`;
+    JOIN location ON location.user_id = users.username where users.username = '${user}';`;
     db.query(markersQuery)
         .then(markersList => {
             res.locals.markersList = markersList.rows;
@@ -124,10 +126,11 @@ controller.getMarkers = (req, res, next) => {
 // route to add one marker
 controller.addMarker = (req, res, next) => {
     //console.log('addmarker req.body:', req.body)
-    const { longitude, latitude } = req.body;
+    const { username, longitude, latitude } = req.body;
+    console.log('server req.body =>', req.body)
     const addMarkerQuery =
-        `INSERT INTO location (longitude, latitude, users_id)
-    VALUES ('${parseInt(longitude)}', '${parseInt(latitude)}', 1);`
+        `INSERT INTO location (longitude, latitude, user_id)
+    VALUES ('${parseInt(longitude)}', '${parseInt(latitude)}', '${username}');`
     db.query(addMarkerQuery)
         .then(newMarker => {
             // console.log('added it', newMarker)
