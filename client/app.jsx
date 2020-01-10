@@ -255,7 +255,7 @@ export default class App extends Component {
 
       <div id="map">
         <br />
-        <Jumbotron class="jumbotron">
+        <Jumbotron className="jumbotron">
           <h1 className="display-3">
             Travel Diary
         </h1>
@@ -279,7 +279,7 @@ export default class App extends Component {
           <Container>
             <Row>
               {/* TAG SEARCH BAR */}
-              <Col Col sm="12" md={{ size: 6, offset: 3 }}>
+              <Col sm="12" md={{ size: 6, offset: 3 }}>
                 <Input id="searchTag" type="text" name="searchTag" placeholder="Filter marker by tag"
                   onChange={this.state.onChange}
                 />
