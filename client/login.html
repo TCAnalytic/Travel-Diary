@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Travel-Diary</title>
+    <link rel="stylesheet" href="./login.css">
+    <link href="https://fonts.googleapis.com/css?family=Pacifico&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="background"></div>
+    <!-- Send to /profile as POST request -->
+    <h1 id=loginHeader>Travel Diary</h1>
+    <form class="login-form" action="/profile" method="POST">
+
+        <h2 id="please-login">Please Sign in</h2>
+        <!-- Username -->
+        <p>
+            <label for="login">Username:</label>
+            <input type="text" name="username" placeholder="Username" required>
+        </p>
+        <!-- Password -->
+        <p>
+            <label for="password">Password:</label>
+            <input type="password" name='password' placeholder="Password" required>
+        </p>
+        <!-- Button -->
+        <p>
+            <input type="submit" name="submit" value="Log In">
+        </p>
+    </form>
+    <form class="sign-up-form" action="/signup" method="GET">
+        <h3 id="no-account">Don't have an account?</h3>
+        <input id="sign-up-btn" type="submit" value="Signup Here!">
+
+    </form>
+</body>
+
+</html>

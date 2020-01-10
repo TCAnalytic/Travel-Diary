@@ -1,0 +1,22 @@
+h1 {
+  font-family: 'Pacifico', cursive;
+  text-align: center;
+}
+
+#map {
+  background: url('https://nancieteresa.files.wordpress.com/2015/01/grunge-travel-background-239421341.jpg');
+}
+
+.jumbotron {
+  background: none;
+}
+
+.picturebox {
+  display: flex;
+  flex-direction: row;
+  padding: 30px;
+}
+
+.markerInfoBox {
+  padding: 30px;
+}
