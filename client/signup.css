@@ -138,3 +138,11 @@ body {
 .no-placeholder .sign-up-form label {
     display: block;
 }
+
+h1 {
+    font-family: 'Pacifico', cursive !important;
+}
+
+input {
+    font-family: 'Open Sans', sans-serif !important;
+}

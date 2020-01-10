@@ -215,3 +215,22 @@ body {
 .no-placeholder .sign-up-formlabel {
     display: block;
 }
+
+h1 {
+    font-family: 'Pacifico', cursive !important;
+    font-size: 72px;
+    text-align: center;
+    color: #4e3043;
+}
+
+h2 {
+    font-family: 'Pacifico', cursive !important;
+}
+
+h3 {
+    font-family: 'Pacifico', cursive !important;
+}
+
+input {
+    font-family: 'Open Sans', sans-serif !important;
+}

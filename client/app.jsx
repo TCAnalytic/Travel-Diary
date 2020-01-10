@@ -10,6 +10,9 @@ import ImageDisplay from './components/imageDisplay.jsx';
 import MarkerInfoBox from './components/markerInfoBox.jsx';
 // import style from './style.css'
 import { Animated } from 'react-animated-css';
+import { Jumbotron, Container, Row, Col, Button, Input, Form } from "reactstrap";
+import "bootstrap/dist/css/bootstrap.css";
+import "./app.css";
 
 //this one renders ya know the app.
 export default class App extends Component {
@@ -118,10 +121,10 @@ export default class App extends Component {
     let newMarker = { username: this.state.username, tag: '', location: { lat: e.latLng.lat(), lng: e.latLng.lng() }, description: '' }
     let newMarkerList = [...this.state.markerList]
     newMarkerList.push(newMarker);
-    
+
     this.setState({ markerList: newMarkerList })
     fetch('/addMarker', {
-      
+
       method: 'POST', // *GET, POST, PUT, DELETE, etc.
       body: JSON.stringify({ ...newMarker, username: newMarker.username, longitude: newMarker.location.lng, latitude: newMarker.location.lat, savedTag: '' }), // 
       headers: {
@@ -136,10 +139,17 @@ export default class App extends Component {
 
   }
 
+  // handleChange(e) {
+  //   e.preventDefault();
+  //   this.setState({ [e.target.name]: e.target.value }, () => {
+  //   })
+  // }
+
   onChange(e) {
     this.setState({ [e.target.name]: e.target.value }, () => {
     })
   }
+
   buttonSubmit() {
     this.setState({ savedTag: this.state.searchTag, searchTag: '' }, () => {
       console.log(`savedTag`, this.state.savedTag);
@@ -147,6 +157,7 @@ export default class App extends Component {
 
     });
   }
+
   onSubmit(e) {
     //does stuff on forms submits
     //take the stored information and update the state   
@@ -198,7 +209,7 @@ export default class App extends Component {
   componentDidMount() {
     fetch('/api')
       .then(res => res.json())
-      
+
       .then((markers) => {
         let newMarkerList;
         markers = markers.markersList;
@@ -241,46 +252,53 @@ export default class App extends Component {
       imageDisplay = <ImageDisplay clickedMarker={this.state.clickedMarker} />
     }
     return (
+
       <div id="map">
-        <Animated animationIn="bounceInLeft" animationOut="fadeOut" isVisible={true}>
-          <h1 className="title">
-            Dear Travel Diary...
-              </h1>
-        </Animated>
+        <br />
+        <Jumbotron class="jumbotron">
+          <h1 className="display-3">
+            Travel Diary
+        </h1>
+        </Jumbotron>
         <div className="centerArea">
-
-        
-          <div>           {/* TAG SEARCH BAR */}
-            <input id ="searchTag" type = "text" name = "searchTag" placeholder="Filter marker by tag" onChange={this.state.onChange} value=''/>
-            <button onClick = {this.state.buttonSubmit}>submit</button>
-          </div>
-
-
           <div className="mapDisplay">
-            <MapDisplay 
-            savedLocation="" 
-            clickedMarker={this.state.clickedMarker} 
-            clickMarker={this.clickMarker} 
-            clickMap={this.clickMap} 
-            markerList={this.state.markerList} 
-            onChange={this.onChange} 
-            searchTag={this.state.searchTag} 
-            buttonSubmit={this.buttonSubmit} 
-            savedTag={this.state.savedTag} 
+            <MapDisplay
+              savedLocation=""
+              clickedMarker={this.state.clickedMarker}
+              clickMarker={this.clickMarker}
+              clickMap={this.clickMap}
+              markerList={this.state.markerList}
+              onChange={this.onChange}
+              searchTag={this.state.searchTag}
+              buttonSubmit={this.buttonSubmit}
+              savedTag={this.state.savedTag}
             />
           </div>
-
+          <br />
+          <br />
+          <Container>
+            <Row>
+              {/* TAG SEARCH BAR */}
+              <Col Col sm="12" md={{ size: 6, offset: 3 }}>
+                <Input id="searchTag" type="text" name="searchTag" placeholder="Filter marker by tag"
+                  onChange={this.state.onChange}
+                />
+              </Col>
+              <div className="text-right">
+                <Button onClick={this.state.buttonSubmit} color="info">Submit</Button>
+              </div>
+            </Row>
+            <br />
+          </Container>
 
           <div className="infoBox">
-            <Animated animationIn="bounceInRight" animationOut="fadeOut" isVisible={true}>
-              {markerInfoBox}
-            </Animated>
+            {markerInfoBox}
             {imageDisplay}
           </div>
-   
+
         </div>
         {markerForm}
-      </div>
+      </div >
     )
   }
 }
