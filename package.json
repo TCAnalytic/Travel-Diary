@@ -34,7 +34,7 @@
     "concurrently": "^5.0.2",
     "cookie-parser": "^1.4.4",
     "css-loader": "^3.4.1",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "express-form-data": "^2.0.10",
     "google-maps-react": "^2.0.2",
     "mongoose": "^5.8.4",
